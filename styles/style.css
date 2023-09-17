@@ -1,0 +1,11 @@
+nav {
+    padding-inline: 1rem;
+}
+
+body > main {
+    padding: 2rem 1rem;
+}
+
+body > footer {
+    margin-top: auto !important;
+}
