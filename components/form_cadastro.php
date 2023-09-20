@@ -11,6 +11,8 @@ if (isset($_GET["compra"])) {
         header("Location: ./consulta.php");
         exit;
     }
+} else {
+    $update = false;
 }
 ?>
 
@@ -22,16 +24,16 @@ if (isset($_GET["compra"])) {
     ?>
 
     <div class="grid">
-        <input type="text" name="nome" placeholder="Nome" value="<?= $user["cliente"] ?>" required>
-        <input type="email" name="email" placeholder="Email" value="<?= $user["email"] ?>" required>
-        <select name="pagamento" value="<?= $user["pagamento"] ?>" required>
+        <input type="text" name="nome" placeholder="Nome" value="<?= $update ? $user["cliente"] : "" ?>" required>
+        <input type="email" name="email" placeholder="Email" value="<?= $update ? $user["email"] : "" ?>" required>
+        <select name="pagamento" value="<?= $update ? $user["pagamento"] : "" ?>" required>
             <option>Selecione uma forma de pagamento...</option>
             <option value="dinheiro">Dinheiro</option>
             <option value="cartao">Cartão</option>
         </select>
     </div>
 
-    <select name="sabor" value="<?= $user["sabor"] ?>" required>
+    <select name="sabor" value="<?= $update ? $user["sabor"] : "" ?>" required>
         <option>Selecione um sabor...</option>
         <option value="margherita">Margherita</option>
         <option value="calabresa">Calabresa</option>
@@ -71,15 +73,15 @@ if (isset($_GET["compra"])) {
 
     <fieldset>
         <legend>Endereço</legend>
-        <input type="text" name="rua" placeholder="Rua" value="<?= $user["rua"] ?>" required>
+        <input type="text" name="rua" placeholder="Rua" value="<?= $update ? $user["rua"] : "" ?>" required>
         <div class="grid">
-            <input type="text" name="numero" placeholder="Número" value="<?= $user["cliente"] ?>" required>
-            <input type="text" name="bairro" placeholder="Bairro" value="<?= $user["bairro"] ?>" required>
+            <input type="text" name="numero" placeholder="Número" value="<?= $update ? $user["cliente"] : "" ?>" required>
+            <input type="text" name="bairro" placeholder="Bairro" value="<?= $update ? $user["bairro"] : "" ?>" required>
             <input type="text" name="complemento" placeholder="Complemento">
         </div>
         <div class="grid">
-            <input type="text" name="cidade" placeholder="Cidade" value="<?= $user["cidade"] ?>" required>
-            <input type="text" name="estado" placeholder="Estado" value="<?= $user["estado"] ?>"required>
+            <input type="text" name="cidade" placeholder="Cidade" value="<?= $update ? $user["cidade"] : "" ?>" required>
+            <input type="text" name="estado" placeholder="Estado" value="<?= $update ? $user["estado"] : "" ?>"required>
         </div>
     </fieldset>
 
