@@ -39,22 +39,26 @@ if (isset($_GET["cliente"])) {
         </thead>
 
         <tbody>
-            <?php
-                foreach($clientes as $row) {
-                    echo "<tr>";
-                    echo "<td><input type='radio' name='compra' value='{$row["id"]}'></td>";
-                    echo "<td>{$row["cliente"]}</td>";
-                    echo "<td>{$row["email"]}</td>";
-                    echo "<td>{$row["pagamento"]}</td>";
-                    echo "<td>{$row["sabor"]}</td>";
-                    echo "<td>{$row["adicionais"]}</td>";
-                    echo "<td>{$row["rua"]}</td>";
-                    echo "<td>{$row["cidade"]}</td>";
-                    echo "<td>{$row["estado"]}</td>";
-                    echo "<td><img  src='{$row["foto"]}' width='60px'></td>";
-                    echo "</tr>";
-                }
-            ?>
+            <?php foreach($clientes as $row): ?>
+                <tr>
+                    <td><input type='radio' name='compra' value='<?= $row["id"] ?>'></td>
+                    <td><?= $row["cliente"] ?></td>
+                    <td><?= $row["email"] ?></td>
+                    <td><?= $row["pagamento"] ?></td>
+                    <td><?= $row["sabor"] ?></td>
+                    <td><?= $row["adicionais"] ?></td>
+                    <td><?= $row["rua"] ?></td>
+                    <td><?= $row["cidade"] ?></td>
+                    <td><?= $row["estado"] ?></td>
+                    <td>
+                        <?php if (isset($row["foto"])): ?>
+                            <img src='<?= $row["foto"] ?>' width='60px'>
+                        <?php else: ?>
+                            -
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 

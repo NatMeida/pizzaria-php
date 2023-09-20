@@ -105,7 +105,7 @@ function update($id, $nome, $foto, $email, $pagamento, $sabor, $adicionais = "",
         $smt->execute();
         $fotoAntiga = $smt->fetch()["foto"];
 
-        if ($foto["size"] > UPLOAD_MAX_SIZE || !preg_match("/image\/(jpg|jpeg|png|gif)/", $foto["type"])) {
+        if ($foto["size"] > UPLOAD_MAX_SIZE || !preg_match("/image\/(jpg|jpeg|png|gif|webp)/", $foto["type"])) {
             echo "<p class='error'>Erro ao fazer upload da imagem!</p>";
             return false;
         }

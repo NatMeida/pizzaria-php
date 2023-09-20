@@ -51,7 +51,7 @@ if (isset($_GET["compra"])) {
             Tomate
         </label>
         <label for="cebola">
-            <input type="checkbox" name="bacon">
+            <input type="checkbox" name="cebola">
             Cebola
         </label>
         <label for="tomate_seco">
@@ -87,7 +87,7 @@ if (isset($_GET["compra"])) {
 
     <div>
         <label for="foto">Foto da pizza:</label>
-        <input type="file" name="foto" accept="image/png, image/jpeg, image/jpg">
+        <input type="file" name="foto" accept="image/png, image/jpeg, image/jpg, image/webp">
     </div>
 
     <button type="submit">Enviar</button>

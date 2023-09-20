@@ -5,6 +5,8 @@
     <?php require("../components/nav.php"); ?>
 
     <main>
+
+    <p>Seja bem-vindo!!</p>
         
     </main>
 
