@@ -4,37 +4,23 @@ if (!isset($_GET["compra"])) {
     exit;
 }
 
-require("../database.php");
+require("../lib/crud.php");
 
 $id = $_GET["compra"];
 
 if (isset($_GET["excluir"]) && $_GET["excluir"] == "true") {
-    $smt = $pdo->prepare("DELETE FROM pedidos WHERE id = :id");
+    deletePedido($id);
+} else if (isset($_GET["excluir"]) && $_GET["excluir"] == "false") {
+    header("Location: ./consulta.php");
+    exit;
 } else {
-    $smt = $pdo->prepare("SELECT * FROM pedidos WHERE id = :id");
-}
-
-$smt->bindParam(":id", $id);
-
-try {
-    $smt->execute();
-} catch (PDOException $e) {
-    echo "<p class='error'>Erro ao consultar pedido!</p>";
-    echo $e;
-    die();
+    $compra = select($id)[0];
 }
 
 if (isset($_GET["excluir"]) && $_GET["excluir"] == "true") {
     header("Location: ./consulta.php");
     die();
 }
-
-if ($smt->rowCount() == 0) {
-    header("Location: ./consulta.php");
-    exit;
-}
-
-$compra = $smt->fetch();
 ?>
 
 <!DOCTYPE html>
@@ -52,7 +38,7 @@ $compra = $smt->fetch();
                 <form action="./excluir.php" class="grid">
                     <input type="hidden" name="compra" value="<?= $compra["id"] ?>">
                     <button type="submit" name="excluir" value="true">Excluir</button>
-                    <button type="submit" class="contrast">Cancelar</button>
+                    <button type="submit" name="excluir" value="false" class="contrast">Cancelar</button>
                 </form>
             </footer>
         </article>

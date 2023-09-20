@@ -73,7 +73,14 @@ function select($id = null)
         $smt = $pdo->prepare("SELECT * FROM pedidos");
     }
 
-    $smt->execute();
+    try {
+        $smt->execute();
+    } catch (PDOException $e) {
+        echo "<p class='error'>Erro ao consultar pedidos!</p>";
+        echo $e;
+        die();
+    }
+
     return $smt->fetchAll();
 }
 
@@ -162,7 +169,7 @@ function update($id, $nome, $foto, $email, $pagamento, $sabor, $adicionais = "",
     return $smt->rowCount() > 0;
 }
 
-function delete($id) {
+function deletePedido($id) {
     global $pdo;
 
     $smt = $pdo->prepare("SELECT foto FROM pedidos WHERE id = :id");
