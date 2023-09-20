@@ -1,23 +1,13 @@
 <?php
 if (isset($_GET["compra"])) {
-    require("../database.php");
+    require("../lib/crud.php");
 
-    $compra = $_GET["compra"];
+    $id = $_GET["compra"];
+    $user = select($id)[0];
 
-    $smt = $pdo->prepare("SELECT * FROM pedidos WHERE id = ?");
-    $smt->bindValue(1, $compra);
-
-    try {
-        $smt->execute();
-
-        if ($smt->rowCount() > 0) {
-            $user = $smt->fetch();
-            $update = true;
-        }
-    } catch (PDOException $e) {
-        echo "<p class='error'>Erro ao consultar pedido!</p>";
-        echo $e;
-        die();
+    if (!$user) {
+        header("Location: ./consulta.php");
+        exit;
     }
 }
 ?>

@@ -1,20 +1,12 @@
 <?php
 require("../database.php");
+require("../lib/crud.php");
 
 if (isset($_GET["cliente"])) {
     $cliente = $_GET["cliente"];
-    $smt = $pdo->prepare("SELECT * FROM pedidos WHERE cliente LIKE :cliente");
-    $smt->bindValue(":cliente", $cliente . "%");
+    $clientes = selectName($cliente);
 } else {
-    $smt = $pdo->prepare("SELECT * FROM pedidos");
-}
-
-try {
-    $smt->execute();
-} catch (PDOException $e) {
-    echo "<p class='error'>Erro ao consultar pedidos!</p>";
-    echo $e;
-    die();
+    $clientes = select();
 }
 ?>
 
@@ -48,7 +40,7 @@ try {
 
         <tbody>
             <?php
-                while ($row = $smt->fetch()) {
+                foreach($clientes as $row) {
                     echo "<tr>";
                     echo "<td><input type='radio' name='compra' value='{$row["id"]}'></td>";
                     echo "<td>{$row["cliente"]}</td>";
