@@ -5,6 +5,8 @@ if (isset($_GET["compra"])) {
     $id = $_GET["compra"];
     $user = select($id)[0];
 
+    $update = true;
+
     if (!$user) {
         header("Location: ./consulta.php");
         exit;

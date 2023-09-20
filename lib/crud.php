@@ -1,7 +1,7 @@
 <?php
 require("../database.php");
 
-define("UPLOAD_DIR", "../uploads/photos/");
+define("UPLOAD_DIR", "uploads/photos/");
 define("UPLOAD_MAX_SIZE", 1024 * 1024 * 5); // 5MB
 
 function insert($nome, $foto, $email, $pagamento, $sabor, $adicionais, $rua, $numero, $bairro, $complemento, $cidade, $estado)
@@ -9,8 +9,6 @@ function insert($nome, $foto, $email, $pagamento, $sabor, $adicionais, $rua, $nu
     global $pdo;
 
     if ($foto && $foto["error"] == 0 && $foto["name"] != "" && $foto["size"] > 0) {
-        echo $foto["type"];
-
         if ($foto["size"] > UPLOAD_MAX_SIZE) {
             echo "<p class='error'>Imagem excede o tamanho máximo permitido</p>";
             return false;
@@ -34,7 +32,7 @@ function insert($nome, $foto, $email, $pagamento, $sabor, $adicionais, $rua, $nu
 
     $smt = $pdo->prepare("INSERT INTO pedidos 
         (cliente, foto, email, pagamento, sabor, adicionais, rua, numero, bairro, cidade, estado) 
-        VALUES (:nome, :foto, :email, :pagamento, :sabor, :adicionais, :rua, :numero, :bairro, :complemento, :cidade, :estado)");
+        VALUES (:nome, :foto, :email, :pagamento, :sabor, :adicionais, :rua, :numero, :bairro, :cidade, :estado)");
     $smt->bindParam(":nome", $nome);
     $smt->bindParam(":email", $email);
     $smt->bindParam(":pagamento", $pagamento);
@@ -45,11 +43,19 @@ function insert($nome, $foto, $email, $pagamento, $sabor, $adicionais, $rua, $nu
     $smt->bindParam(":bairro", $bairro);
     $smt->bindParam(":cidade", $cidade);
     $smt->bindParam(":estado", $estado);
-    $smt->bindParam(":foto", $filename);
+    $smt->bindParam(":foto", $filepath);
 
-    $smt->execute();
+    try {
+        $smt->execute();
+    } catch (PDOException $e) {
+        echo "<p class='error'>Erro ao cadastrar pedido!</p>";
+        echo $e;
+        die();
+    }
+
 
     if ($smt->rowCount() > 0) {
+        echo "foi";
         return $pdo->lastInsertId();
     } else if ($filename) {
         unlink($filepath);
@@ -81,7 +87,7 @@ function selectName($name) {
     return $smt->fetchAll();
 }
 
-function update($id, $nome, $foto, $email, $pagamento, $sabor, $adicionais, $rua, $numero, $bairro, $complemento, $cidade, $estado)
+function update($id, $nome, $foto, $email, $pagamento, $sabor, $adicionais = "", $rua, $numero, $bairro, $complemento, $cidade, $estado)
 {
     global $pdo;
 
@@ -119,7 +125,7 @@ function update($id, $nome, $foto, $email, $pagamento, $sabor, $adicionais, $rua
         cidade = :cidade, 
         estado = :estado" 
         . ($filename ? ", foto = :foto" : "") 
-        . "WHERE id = :id"
+        . " WHERE id = :id"
     );
 
     $smt->bindParam(":id", $id);
@@ -135,10 +141,17 @@ function update($id, $nome, $foto, $email, $pagamento, $sabor, $adicionais, $rua
     $smt->bindParam(":estado", $estado);
 
     if ($filename) {
-        $smt->bindParam(":foto", $filename);
+        $smt->bindParam(":foto", $filepath);
     }
 
-    $smt->execute();
+    try {
+        $smt->execute();
+    } catch (PDOException $e) {
+        echo "<p class='error'>Erro ao atualizar pedido!</p>";
+        echo $e;
+        die();
+    }
+
 
     if ($smt->rowCount() > 0 && $filename) {
         unlink($fotoAntiga);
