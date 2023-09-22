@@ -1,5 +1,5 @@
 <?php
-require("../database.php");
+require_once __DIR__ . "/database.php";
 
 define("UPLOAD_DIR", "uploads/photos/");
 define("UPLOAD_MAX_SIZE", 1024 * 1024 * 5); // 5MB
