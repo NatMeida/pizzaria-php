@@ -1,4 +1,4 @@
-<?php 
+<?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require("../lib/crud.php");
 
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (isset($_POST["tomate_seco"]))
         $adicionais .= "tomate seco, ";
-    
+
     if (isset($_POST["cheddar"]))
         $adicionais .= "cheddar, ";
 
@@ -54,16 +54,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
-<?php $title = isset($_GET["compra"]) ? "Edição" : "Cadastro"; require("../components/head.php") ?>
+<?php $title = isset($_GET["compra"]) ? "Edição" : "Cadastro";
+require("./components/head.php") ?>
+
 <body>
-    <?php require("../components/nav.php") ?>
-    
+    <?php require("./components/nav.php") ?>
+
     <main>
-        <h1><?= isset($_GET["compra"]) ? "Editar pedido" : "Faça seu pedido!" ?></h1>
-        
-        <?php require("../components/form_cadastro.php") ?>
+        <h1>
+            <?= isset($_GET["compra"]) ? "Editar pedido" : "Faça seu pedido!" ?>
+        </h1>
+
+        <?php require("./components/form_cadastro.php") ?>
     </main>
-    
-    <?php require("../components/footer.php") ?>
+
+    <?php require("./components/footer.php") ?>
 </body>
+
 </html>

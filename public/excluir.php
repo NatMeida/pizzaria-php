@@ -1,4 +1,4 @@
-<?php 
+<?php
 if (!isset($_GET["compra"])) {
     header("Location: ./consulta.php");
     exit;
@@ -25,14 +25,18 @@ if (isset($_GET["excluir"]) && $_GET["excluir"] == "true") {
 
 <!DOCTYPE html>
 <html lang="en">
-<?php $title = "Excluir"; require("../components/head.php") ?>
+<?php $title = "Excluir";
+require("./components/head.php") ?>
 
 <body>
-    <?php require("../components/nav.php") ?>
+    <?php require("./components/nav.php") ?>
 
     <main>
         <article>
-            <header><?= $compra["cliente"] ?> - Pizza <?= $compra["sabor"]  ?> </header>
+            <header>
+                <?= $compra["cliente"] ?> - Pizza
+                <?= $compra["sabor"] ?>
+            </header>
             Você tem certeza que deseja excluir essa compra?
             <footer>
                 <form action="./excluir.php" class="grid">
@@ -44,7 +48,7 @@ if (isset($_GET["excluir"]) && $_GET["excluir"] == "true") {
         </article>
     </main>
 
-    <?php require("../components/footer.php") ?>
+    <?php require("./components/footer.php") ?>
 </body>
 
 </html>
