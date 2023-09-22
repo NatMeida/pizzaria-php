@@ -1,11 +1,33 @@
 <?php
 require_once __DIR__ . "/../../lib/crud.php";
+require_once __DIR__ . "/../../lib/database.php";
 
 if (isset($_GET["cliente"])) {
     $cliente = $_GET["cliente"];
-    $clientes = selectName($cliente);
+
+    if (isset($_GET["sort"])) {
+        $sortBy = $_GET["sort"];
+
+        $smt = $pdo->prepare("SELECT * FROM pedidos WHERE cliente = :nome ORDER BY :column");
+        $smt->bindParam(":nome", $cliente);
+
+        $smt->bindParam(":column", $sortBy);
+
+        $smt->execute();
+        $clientes = $smt->fetchAll();
+    } else {
+        $clientes = selectName($cliente);
+    }
 } else {
-    $clientes = select();
+    if (isset($_GET["sort"])) {
+        $sortBy = $_GET["sort"];
+        
+        $smt = $pdo->prepare("SELECT * FROM pedidos ORDER BY $sortBy");
+        $smt->execute();
+        $clientes = $smt->fetchAll();
+    } else {
+        $clientes = select();
+    }
 }
 ?>
 
@@ -13,11 +35,34 @@ if (isset($_GET["cliente"])) {
     <thead>
         <tr>
             <th></th>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Pagamento</th>
-            <th>Sabor</th>
-            <th>Adicionais</th>
+            <th
+                hx-get="./api/table_consulta.php?sort=cliente"
+                hx-target="#table_consulta"
+                hx-swap="outerHTML"
+            >Nome</th>
+
+            <th
+                hx-get="./api/table_consulta.php?sort=email"
+                hx-target="#table_consulta"
+                hx-swap="outerHTML"
+            >Email</th>
+
+            <th
+                hx-get="./api/table_consulta.php?sort=pagamento"
+                hx-target="#table_consulta"
+                hx-swap="outerHTML"
+            >Pagamento</th>
+
+            <th
+                hx-get="./api/table_consulta.php?sort=sabor"
+                hx-target="#table_consulta"
+                hx-swap="outerHTML">Sabor</th>
+
+            <th
+                hx-get="./api/table_consulta.php?sort=adicionais"
+                hx-target="#table_consulta"
+                hx-swap="outerHTML">Adicionais</th>
+
             <th>Rua</th>
             <th>Cidade</th>
             <th>Estado</th>
