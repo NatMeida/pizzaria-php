@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php $title = "Home";
-require("./components/head.php"); ?>
+require_once __DIR__ . "/../components/head.php"; ?>
 
 <body>
-    <?php require("./components/nav.php"); ?>
+    <?php require __DIR__ . "/../components/nav.php"; ?>
 
     <main>
 
@@ -12,7 +12,7 @@ require("./components/head.php"); ?>
 
     </main>
 
-    <?php require("./components/footer.php") ?>
+    <?php require __DIR__ . "/../components/footer.php"; ?>
 </body>
 
 </html>

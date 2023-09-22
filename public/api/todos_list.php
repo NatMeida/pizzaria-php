@@ -17,6 +17,6 @@ if (isset($_COOKIE["user"])) {
 }
 ?>
 
-<?php foreach ($todos as $todo): ?>
+<?php if (isset($todos)) foreach ($todos as $todo): ?>
     <li><?= $todo["task"] ?></li>
 <?php endforeach; ?>

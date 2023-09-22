@@ -1,33 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php $title = "Home";
-require("./components/head.php"); ?>
+<?php $title = "Home"; require "../components/head.php"; ?>
 
 <body>
-    <?php require("./components/nav.php"); ?>
+    <?php require "../components/nav.php"; ?>
 
     <main class="container">
-        <?php require __DIR__ . "/components/login.php"; ?>
+        <?php require "../components/form_login.php"; ?>
 
-        <form id="teste" hx-get="./components/nav.php" hx-swap="outerHTML">
-            <input type="number">
-        </form>
-
-        <div></div>
-
-        <ul id="todos" hx-get="./components/todos_list.php" hx-trigger="submit from:#login">
-            <?php require_once __DIR__ . "/components/todos_list.php"; ?>
-        </ul>
-
-        <form hx-post="./components/add_todo.php" hx-target="#todos" hx-swap="beforeend">
+        <form hx-post="./api/add_todo.php" hx-target="#todos" hx-swap="afterbegin">
             <label for="todo">
                 Task:
                 <input type="text" name="todo">
             </label>
         </form>
+
+        <ul id="todos" hx-get="./api/todos_list.php" hx-trigger="submit from:#login" hx-sync="#login:queue last">
+            <?php require "./api/todos_list.php"; ?>
+        </ul>
     </main>
 
-    <?php require("./components/footer.php") ?>
+    <?php require "../components/footer.php"; ?>
 </body>
 
 </html>

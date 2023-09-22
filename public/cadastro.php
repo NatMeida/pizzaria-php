@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require("../lib/crud.php");
+    require_once __DIR__ . "/../lib/crud.php";
 
     $nome = $_POST["nome"];
     $email = $_POST["email"];
@@ -54,21 +54,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
-<?php $title = isset($_GET["compra"]) ? "Edição" : "Cadastro";
-require("./components/head.php") ?>
+<?php $title = isset($_GET["compra"]) ? "Edição" : "Cadastro"; require_once __DIR__ . "/../components/head.php"; ?>
 
 <body>
-    <?php require("./components/nav.php") ?>
+    <?php require_once __DIR__ . "/../components/nav.php"; ?>
 
     <main>
         <h1>
             <?= isset($_GET["compra"]) ? "Editar pedido" : "Faça seu pedido!" ?>
         </h1>
 
-        <?php require("./components/form_cadastro.php") ?>
+        <?php require_once __DIR__ . "/../components/form_cadastro.php"; ?>
     </main>
 
-    <?php require("./components/footer.php") ?>
+    <?php require_once __DIR__ . "/../components/footer.php"; ?>
 </body>
 
 </html>
